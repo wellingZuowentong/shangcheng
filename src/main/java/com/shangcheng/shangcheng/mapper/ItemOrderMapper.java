@@ -16,4 +16,6 @@ public interface ItemOrderMapper {
     public int updateItemOrder(@Param("oid") Integer oid,@Param("boid") Integer boid);
     public int delItemOrder(Integer oid);
     public List<ItemOrder> getItemOrderByOid(Integer oid);
+    public int updateItemOrderPj(@Param("id")Integer id,@Param("pj")Integer pj);
+    public ItemOrder getItemOrderById(Integer id);
 }

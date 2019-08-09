@@ -16,9 +16,10 @@ public class ItemOrder{
     private Item item;
     private Details details;
     private Integer boid;
+    private Integer pj;
     public ItemOrder(){}
 
-    public ItemOrder(Integer id, Integer num, BigDecimal price, Integer iid, Integer uid, Integer oid, Item item, Details details, Integer boid) {
+    public ItemOrder(Integer id, Integer num, BigDecimal price, Integer iid, Integer uid, Integer oid, Item item, Details details, Integer boid, Integer pj) {
         this.id = id;
         this.num = num;
         this.price = price;
@@ -28,6 +29,7 @@ public class ItemOrder{
         this.item = item;
         this.details = details;
         this.boid = boid;
+        this.pj = pj;
     }
 
     public Integer getId() {
@@ -102,6 +104,14 @@ public class ItemOrder{
         this.boid = boid;
     }
 
+    public Integer getPj() {
+        return pj;
+    }
+
+    public void setPj(Integer pj) {
+        this.pj = pj;
+    }
+
     @Override
     public String toString() {
         return "ItemOrder{" +
@@ -114,6 +124,7 @@ public class ItemOrder{
                 ", item=" + item +
                 ", details=" + details +
                 ", boid=" + boid +
+                ", pj=" + pj +
                 '}';
     }
 }

@@ -5,16 +5,25 @@
 <mapper namespace="com.shangcheng.shangcheng.mapper.ItemOrderMapper">
 
     <insert id="saveItemOrder" parameterType="com.shangcheng.shangcheng.bean.ItemOrder">
-        insert into itemorder(id,num,iid,uid,oid) values(#{id},#{num},#{iid},#{uid},#{oid})
+        insert into itemorder(id,num,iid,uid,oid,pj) values(#{id},#{num},#{iid},#{uid},#{oid},#{pj})
     </insert>
     <update id="updateItemOrder">
         update itemorder set boid=#{boid} where oid=#{oid}
     </update>
+
+
+    <update id="updateItemOrderPj">
+        update itemorder set pj=#{pj} where id=#{id}
+    </update>
+
     <delete id="delItemOrder">
         delete from itemorder where oid=#{value}
     </delete>
     <select id="getItemOrderByOid" resultType="com.shangcheng.shangcheng.bean.ItemOrder">
         select * from itemorder where oid=#{value}
+    </select>
+    <select id="getItemOrderById" resultType="com.shangcheng.shangcheng.bean.ItemOrder">
+        select * from itemorder where id=#{value}
     </select>
 
 </mapper>

@@ -25,8 +25,9 @@
             <id column="i_id" property="id" />
             <result column="i_num" property="num"/>
             <result column="i_price" property="price"/>
-
+            <result column="i_pj" property="pj"/>
             <association property="item" javaType="com.shangcheng.shangcheng.bean.Item">
+                <id column="sp_id" property="id" />
                 <result column="sp_iname" property="iname"/>
                 <result column="sp_paddress" property="paddress"/>
             </association>
@@ -47,7 +48,7 @@
     <select id="getAllOrder" resultMap="ordertable">
         SELECT o.id o_id,o.ordernum o_ordernum,o.allprice o_allprice,o.uid o_uid,o.code o_code,o.date o_date,o.phone o_phone,
         o.address o_address,o.yuliua o_yuliua,o.yuliub o_yuliub,o.yuliuc o_yuliuc,o.nicheng o_nicheng,i.id i_id,i.num i_num,
-        i.price i_price,sp.iname sp_iname,sp.paddress sp_paddress,de.canshu de_canshu
+        i.price i_price,i.pj i_pj,sp.id sp_id,sp.iname sp_iname,sp.paddress sp_paddress,de.canshu de_canshu
         FROM _order o left join
         itemorder i on i.oid=o.id left join item sp
         on sp.id = i.iid left join details de

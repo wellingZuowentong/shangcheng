@@ -17,13 +17,18 @@ import java.util.List;
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
-
+    /*
+    * 查询所有类别
+    * */
     @RequestMapping("getAllCategory")
     @ResponseBody
     public List<Category> getAllCategory(){
         return categoryService.getAllCategory();
     }
 
+    /*
+     * 添加类别
+     * */
     @RequestMapping("saveCategory")
     @ResponseBody
     public int saveCategory(Category category){

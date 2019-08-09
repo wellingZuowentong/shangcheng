@@ -41,7 +41,9 @@ public class OrderController {
 
 
 
-
+    /*
+    * 新增订单
+    * */
     @RequestMapping(value="saveOrder",method = RequestMethod.POST)
     @ResponseBody
     public int saveOrder(@RequestBody List<Map<String,Object>> list){
@@ -93,6 +95,7 @@ public class OrderController {
            itemOrder.setNum(num);
            itemOrder.setUid(uid);
            itemOrder.setOid(oid);
+           itemOrder.setPj(0);
            itemOrderService.saveItemOrder(itemOrder);
            Details details = detailsService.getDetailsByIid(iid);
            details.setKucun(details.getKucun()-num);
@@ -106,6 +109,7 @@ public class OrderController {
        order.setAddress(address);
        order.setAllprice(allPrice);
        order.setNicheng(shname);
+       order.setCode(3);
        orderService.updateOrder(order);
         return 1;
     }
@@ -118,7 +122,9 @@ public class OrderController {
         System.out.println("ceshi:"+uid);
         return orderService.getAllOrder(uid);
     }
-
+/*
+* 根据订单id查询订单
+* */
     @RequestMapping("getOrder")
     @ResponseBody
     public Order getOrder(Integer id){
@@ -151,6 +157,19 @@ public class OrderController {
     @ResponseBody
     public int updateOrder(Order order){
         return orderService.updateOrder(order);
+    }
+    /*
+     * 发货
+     * */
+    @RequestMapping("outitem")
+    @ResponseBody
+    public int outitem(Integer id,String kdgs,String kddh){
+        Order order = orderService.getOrder(id);
+        order.setYuliub(kdgs);
+        order.setYuliuc(kddh);
+        order.setCode(2);
+        orderService.updateOrder(order);
+        return 1;
     }
 
 

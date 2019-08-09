@@ -32,42 +32,57 @@ public class ItemController {
     private ItemService itemService;
     @Autowired
     private DetailsService detailsService;
+    /*
+    * 查询所有商品信息
+    * */
     @RequestMapping("getAllItems")
     @ResponseBody
     public List<Item> getAllItems(){
         return itemService.getAllItems();
     }
-
+/*
+* 根据id查询商品
+* */
     @RequestMapping("getItem")
     @ResponseBody
     public Item getItem(Integer id){
         return itemService.getItem(id);
     }
-
+    /*
+    * 根据商品名字查询商品
+    * */
     @RequestMapping("getAllItemsByName")
     @ResponseBody
     public List<Item> getAllItemsByName(String name){
         return itemService.getAllItemsByName(name);
     }
-
+    /*
+    * 查询所有类别及其包含的商品信息
+    * */
     @RequestMapping("getAllExCategory")
     @ResponseBody
     public List<ExCategory> getAllExCategory(){
         return itemService.getAllExCategory();
     }
-
+    /*
+    * 根据商品id查询商品信息和商品详情
+    * */
     @RequestMapping("getExItem")
     @ResponseBody
     public ExItem getExItem(Integer id){
         return itemService.getExItem(id);
     }
-
+    /*
+    * 修改商品信息
+    * */
     @RequestMapping("updateItem")
     @ResponseBody
     public int updateItem(Item item){
         return itemService.updateItem(item);
     }
-
+    /*
+    * 添加商品信息
+    * */
     @RequestMapping("saveItem" )
     @ResponseBody
     public int saveItem(@RequestParam(value="file",required=false)MultipartFile file,HttpServletRequest request)throws UnsupportedEncodingException {

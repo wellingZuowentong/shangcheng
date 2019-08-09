@@ -27,4 +27,10 @@ public class ItemOrderService {
     public List<ItemOrder> getItemOrderByOid(Integer oid){
         return itemOrderMapper.getItemOrderByOid(oid);
     }
+    public int updateItemOrderPj(Integer id,Integer pj){
+        return itemOrderMapper.updateItemOrderPj(id,pj);
+    }
+    public ItemOrder getItemOrderById(Integer id){
+        return itemOrderMapper.getItemOrderById(id);
+    }
 }

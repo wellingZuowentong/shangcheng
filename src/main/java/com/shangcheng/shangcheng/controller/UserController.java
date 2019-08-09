@@ -44,7 +44,9 @@ public class UserController {
         out.close();
         out = null;
     }*/
-
+/*
+* 微信小程序用户登陆
+* */
     @RequestMapping(value = "userinfo", method = RequestMethod.POST)
     @ResponseBody
     public Integer userinfo(String code,String encryptedData,String iv,HttpServletRequest request, HttpServletResponse response)
@@ -72,13 +74,17 @@ return user.getId();
 
 
     }
-
+/*
+* 查询所有用户信息
+* */
     @RequestMapping(value = "getAllUser", method = RequestMethod.POST)
     @ResponseBody
     public List<User> getAllUser(){
         return userService.getAllUser();
     }
-
+    /*
+    * 根据id查询所有收货信息
+    * */
     @RequestMapping(value = "getUserById", method = RequestMethod.POST)
     @ResponseBody
     public User getUserById(Integer id){
@@ -88,7 +94,9 @@ return user.getId();
 
 
 
-
+/*、
+* 获得session_key
+* */
     public String getSessionKey(String code) {
         String url = "https://api.weixin.qq.com/sns/jscode2session?appid=wx08269207b6d2fd7d&secret=94eb89ac50202f68cbca57594e03c3a5&js_code=" + code + "&grant_type=authorization_code";
         System.out.println(url);
