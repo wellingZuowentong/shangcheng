@@ -1,0 +1,52 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shangcheng.shangcheng.mapper.BackOrderMapper">
+
+    <sql id="backordersql">
+        id,ordernum,allprice,uid,date,code,backprice,yla,ylb,ylc
+    </sql>
+
+    <insert id="saveBackOrder" parameterType="com.shangcheng.shangcheng.bean.BackOrder" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+      insert into backorder(<include refid="backordersql" />)
+      values(#{id},#{ordernum},#{allprice},#{uid},#{date},#{code},#{backprice},#{yla},#{ylb},#{ylc})
+    </insert>
+
+    <resultMap id="backordertable" type="com.shangcheng.shangcheng.bean.Order">
+        <id column="o_id" property="id" />
+        <result column="o_ordernum" property="ordernum"/>
+        <result column="o_allprice" property="allprice"/>
+        <result column="o_uid" property="uid"/>
+        <result column="o_code" property="code"/>
+        <result column="o_date" property="date"/>
+        <result column="o_backprice" property="backprice"/>
+        <result column="o_yla" property="yla"/>
+        <result column="o_ylb" property="ylb"/>
+        <result column="o_ylc" property="ylc"/>
+        <collection property="itemOrders" ofType="com.shangcheng.shangcheng.bean.ItemOrder">
+            <id column="i_id" property="id" />
+            <result column="i_num" property="num"/>
+            <result column="i_price" property="price"/>
+            <association property="item" javaType="com.shangcheng.shangcheng.bean.Item">
+                <result column="sp_iname" property="iname"/>
+                <result column="sp_paddress" property="paddress"/>
+            </association>
+            <association property="details" javaType="com.shangcheng.shangcheng.bean.Details">
+                <result column="de_canshu" property="canshu"/>
+            </association>
+        </collection>
+    </resultMap>
+
+    <select id="getAllBackOrder" resultMap="backordertable">
+        SELECT o.id o_id,o.ordernum o_ordernum,o.allprice o_allprice,o.uid o_uid,o.code o_code,o.date o_date,o.backprice o_backprice
+        i.id i_id,i.num i_num,i.price i_price,sp.iname sp_iname,sp.paddress sp_paddress,de.canshu de_canshu
+        FROM backorder o left join
+        itemorder i on i.boid=o.id left join item sp
+        on sp.id = i.iid left join details de
+        on de.iid = sp.id
+        where o.uid=#{value}
+    </select>
+
+
+</mapper>

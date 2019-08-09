@@ -1,0 +1,75 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shangcheng.shangcheng.mapper.OrderMapper">
+
+    <sql id="ordersql">
+        id,ordernum,allprice,uid,code,date,phone,address,yuliua,yuliub,yuliuc,nicheng
+    </sql>
+
+    <resultMap id="ordertable" type="com.shangcheng.shangcheng.bean.Order">
+        <id column="o_id" property="id" />
+        <result column="o_ordernum" property="ordernum"/>
+        <result column="o_allprice" property="allprice"/>
+        <result column="o_uid" property="uid"/>
+        <result column="o_code" property="code"/>
+        <result column="o_date" property="date"/>
+        <result column="o_nicheng" property="nicheng"/>
+        <result column="o_phone" property="phone"/>
+        <result column="o_address" property="address"/>
+        <result column="o_yuliua" property="yuliua"/>
+        <result column="o_yuliub" property="yuliub"/>
+        <result column="o_yuliuc" property="yuliuc"/>
+        <collection property="itemOrders" ofType="com.shangcheng.shangcheng.bean.ItemOrder">
+            <id column="i_id" property="id" />
+            <result column="i_num" property="num"/>
+            <result column="i_price" property="price"/>
+
+            <association property="item" javaType="com.shangcheng.shangcheng.bean.Item">
+                <result column="sp_iname" property="iname"/>
+                <result column="sp_paddress" property="paddress"/>
+            </association>
+
+            <association property="details" javaType="com.shangcheng.shangcheng.bean.Details">
+                <result column="de_canshu" property="canshu"/>
+            </association>
+
+        </collection>
+    </resultMap>
+
+    <insert id="saveOrder" parameterType="com.shangcheng.shangcheng.bean.Order" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+      insert into _order(<include refid="ordersql"/>)
+      values
+      (#{id},#{ordernum},#{allprice},#{uid},#{code},#{date},#{phone},#{address},#{yuliua},#{yuliub},#{yuliuc},#{nicheng})
+    </insert>
+
+    <select id="getAllOrder" resultMap="ordertable">
+        SELECT o.id o_id,o.ordernum o_ordernum,o.allprice o_allprice,o.uid o_uid,o.code o_code,o.date o_date,o.phone o_phone,
+        o.address o_address,o.yuliua o_yuliua,o.yuliub o_yuliub,o.yuliuc o_yuliuc,o.nicheng o_nicheng,i.id i_id,i.num i_num,
+        i.price i_price,sp.iname sp_iname,sp.paddress sp_paddress,de.canshu de_canshu
+        FROM _order o left join
+        itemorder i on i.oid=o.id left join item sp
+        on sp.id = i.iid left join details de
+        on de.iid = sp.id
+        where o.uid=#{value}
+    </select>
+
+    <select id="getOrderAll" resultMap="ordertable">
+        SELECT <include refid="ordersql"/> FROM _order
+    </select>
+
+    <select id="getOrder" resultType="com.shangcheng.shangcheng.bean.Order">
+        SELECT <include refid="ordersql"/> FROM _order where id=#{value}
+    </select>
+
+    <delete id="delOrder">
+        delete from _order where id=#{value}
+    </delete>
+
+    <update id="updateOrder" parameterType="com.shangcheng.shangcheng.bean.Order">
+        update _order set
+        allprice=#{allprice},code=#{code},phone=#{phone},address=#{address},
+        yuliua=#{yuliua},yuliub=#{yuliub},yuliuc=#{yuliuc},uid=#{uid},date=#{date}where id=#{id}
+    </update>
+</mapper>

@@ -1,0 +1,26 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shangcheng.shangcheng.mapper.DetailsMapper">
+
+    <sql id="detailssql">
+        id,guige,canshu,daddress,huodong,xiaoliang,kucun,kuaidi,iid
+    </sql>
+    <insert id="saveDetails" parameterType="com.shangcheng.shangcheng.bean.Details">
+      insert into details(<include refid="detailssql"/>) values (#{id},#{guige},#{canshu},#{daddress},#{huodong},#{xiaoliang},#{kucun},#{kuaidi},#{iid})
+    </insert>
+    <select id="getDetailsByIid" resultType="com.shangcheng.shangcheng.bean.Details">
+        SELECT <include refid="detailssql"/> FROM details where iid=#{value}
+    </select>
+    <select id="getDetailsById" resultType="com.shangcheng.shangcheng.bean.Details">
+        SELECT <include refid="detailssql"/> FROM details where id=#{value}
+    </select>
+    <delete id="delDetails">
+        delete from details where id=#{value}
+    </delete>
+    <update id="updateDetails">
+        update details set guige=#{guige},canshu=#{canshu},daddress=#{daddress},huodong=#{huodong},xiaoliang=#{xiaoliang},
+        kucun=#{kucun},kuaidi=#{kuaidi} where id=#{id}
+    </update>
+</mapper>

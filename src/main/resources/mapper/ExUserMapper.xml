@@ -1,0 +1,31 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shangcheng.shangcheng.mapper.ExUserMapper">
+
+    <select id="getExUserById" resultType="com.shangcheng.shangcheng.bean.ExUser">
+        select * from exuser where id=#{value}
+    </select>
+
+    <select id="getExUserByUid" resultType="com.shangcheng.shangcheng.bean.ExUser">
+        select * from exuser where uid=#{value}
+    </select>
+
+    <select id="getAllExUser" resultType="com.shangcheng.shangcheng.bean.ExUser">
+        select * from exuser
+    </select>
+
+    <insert id="saveExUser" parameterType="com.shangcheng.shangcheng.bean.ExUser" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into exuser(id,phone,address,uid,code,name,beizhu) values(#{id},#{phone},#{address},#{uid},#{code},#{name},#{beizhu});
+    </insert>
+
+    <delete id="deleteExUser">
+        delete from exuser where id=#{value}
+    </delete>
+
+    <update id="updateExUser" parameterType="com.shangcheng.shangcheng.bean.ExUser">
+        update exuser set phone=#{phone},address=#{address},code=#{code},name=#{name},beizhu=#{beizhu} where id=#{id}
+    </update>
+
+</mapper>

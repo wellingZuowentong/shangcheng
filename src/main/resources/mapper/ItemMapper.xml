@@ -1,0 +1,95 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shangcheng.shangcheng.mapper.ItemMapper">
+
+    <sql id="itemsql">
+        id,iname,inprice,outprice,paddress,beiyonga,beiyongb,beiyongc,cid
+    </sql>
+
+    <resultMap id="categorytable" type="com.shangcheng.shangcheng.bean.ExCategory">
+        <id column="c_id" property="id"/>
+        <result column="c_name" property="cname"/>
+        <result column="c_ishavechild" property="ishaveChild"/>
+        <collection property="items" ofType="com.shangcheng.shangcheng.bean.Item">
+            <id column="i_id" property="id"/>
+            <result column="i_name" property="iname"/>
+            <result column="i_inprice" property="inprice"/>
+            <result column="i_outprice" property="outprice"/>
+            <result column="i_paddress" property="paddress"/>
+            <result column="i_beiyonga" property="beiyonga"/>
+            <result column="i_beiyongb" property="beiyongb"/>
+            <result column="i_beiyongc" property="beiyongc"/>
+            <result column="i_cid" property="cid"/>
+        </collection>
+
+    </resultMap>
+
+    <insert id="saveItem" parameterType="com.shangcheng.shangcheng.bean.Item" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+      insert into item(<include refid="itemsql"/>) values (#{id},#{iname},#{inprice},#{outprice},#{paddress},#{beiyonga},#{beiyongb},#{beiyongc},#{cid})
+    </insert>
+    <select id="getAllItems" resultType="com.shangcheng.shangcheng.bean.Item">
+        SELECT <include refid="itemsql"/> FROM item
+    </select>
+    <select id="getItem" resultType="com.shangcheng.shangcheng.bean.Item">
+        SELECT <include refid="itemsql"/> FROM item where id=#{value}
+    </select>
+    <select id="getAllItemsByName" resultType="com.shangcheng.shangcheng.bean.Item">
+        SELECT <include refid="itemsql"/> FROM item where iname like '%${value}%'
+    </select>
+    <delete id="delItem">
+        delete from item where id=#{value}
+    </delete>
+    <update id="updateItem">
+        update item set iname=#{iname},inprice=#{inprice},outprice=#{outprice},paddress=#{paddress},beiyonga=#{beiyonga},beiyongb=#{beiyongb},beiyongc=#{beiyongc},cid=#{cid} where id=#{id}
+    </update>
+    <select id="getAllExCategory" resultMap="categorytable">
+        select c.id c_id,c.cname c_name,c.ishavechild c_ishavechild,i.id i_id,i.iname i_name,
+        i.inprice i_inprice,i.outprice i_outprice,i.paddress i_paddress,
+        i.beiyonga i_beiyong,i.beiyongb i_beiyongb,i.beiyongc i_beiyongc,i.cid i_cid
+        from category c left join item i on i.cid = c.id
+    </select>
+
+    <resultMap id="itemtable" type="com.shangcheng.shangcheng.bean.ExItem">
+        <id column="i_id" property="id"/>
+        <result column="i_name" property="iname"/>
+        <result column="i_inprice" property="inprice"/>
+        <result column="i_outprice" property="outprice"/>
+        <result column="i_paddress" property="paddress"/>
+        <result column="i_beiyonga" property="beiyonga"/>
+        <result column="i_beiyongb" property="beiyongb"/>
+        <result column="i_beiyongc" property="beiyongc"/>
+        <result column="i_cid" property="cid"/>
+        <association property="details" javaType="com.shangcheng.shangcheng.bean.Details">
+          <!--id,guige,canshu,daddress,huodong,xiaoliang,kucun,kuaidi,iid-->
+            <id column="d_id" property="id"/>
+            <result column="d_guige" property="guige"/>
+            <result column="d_canshu" property="canshu"/>
+            <result column="d_daddress" property="daddress"/>
+            <result column="d_huodong" property="huodong"/>
+            <result column="d_xiaoliang" property="xiaoliang"/>
+            <result column="d_kucun" property="kucun"/>
+            <result column="d_kuaidi" property="kuaidi"/>
+            <result column="d_iid" property="iid"/>
+        </association>
+        <collection property="pingjias" ofType="com.shangcheng.shangcheng.bean.PingJia">
+            <id column="p_id" property="id"/>
+            <result column="p_neirong" property="neirong"/>
+            <result column="p_gb" property="gb"/>
+            <result column="p_date" property="date"/>
+            <result column="p_pname" property="pname"/>
+            <result column="p_iid" property="iid"/>
+            <result column="p_uid" property="uid"/>
+        </collection>
+
+    </resultMap>
+
+    <select id="getExItem" resultMap="itemtable">
+      select i.id i_id,i.iname i_name,i.inprice i_inprice,i.outprice i_outprice,i.paddress i_paddress,
+      i.beiyonga i_beiyong,i.beiyongb i_beiyongb,i.beiyongc i_beiyongc,i.cid i_cid,
+      d.id d_id,d.guige d_guige,d.canshu d_canshu,d.daddress d_daddress,d.huodong d_huodong,d.xiaoliang d_xiaoliang,d.kucun d_kucun,
+      d.kuaidi d_kuaidi,d.iid d_iid,p.id p_id,p.neirong p_neirong,p.pname p_pname,p.date p_date,p.gb p_gb,p.iid p_iid,p.uid p_uid
+      from item i left join details d on i.id=d.iid left join pingjia p on i.id=p.iid where i.id=#{value}
+    </select>
+</mapper>

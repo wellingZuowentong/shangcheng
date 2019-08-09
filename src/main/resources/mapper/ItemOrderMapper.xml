@@ -1,0 +1,20 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shangcheng.shangcheng.mapper.ItemOrderMapper">
+
+    <insert id="saveItemOrder" parameterType="com.shangcheng.shangcheng.bean.ItemOrder">
+        insert into itemorder(id,num,iid,uid,oid) values(#{id},#{num},#{iid},#{uid},#{oid})
+    </insert>
+    <update id="updateItemOrder">
+        update itemorder set boid=#{boid} where oid=#{oid}
+    </update>
+    <delete id="delItemOrder">
+        delete from itemorder where oid=#{value}
+    </delete>
+    <select id="getItemOrderByOid" resultType="com.shangcheng.shangcheng.bean.ItemOrder">
+        select * from itemorder where oid=#{value}
+    </select>
+
+</mapper>

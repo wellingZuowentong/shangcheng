@@ -1,0 +1,33 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shangcheng.shangcheng.mapper.PingJiaMapper">
+
+   <!-- <select id="getAllPingJiaByUid" resultType="com.shangcheng.shangcheng.bean.PingJia">
+       SELECT count(*) FROM `pingjia`where iid=#{value} group by gb order by gb
+    </select>-->
+
+    <select id="getAllPingJiaByUid" resultType="com.shangcheng.shangcheng.bean.PingJia">
+        select * from pingjia where uid=#{value}
+    </select>
+
+    <select id="getAllPingJiaByiid" resultType="com.shangcheng.shangcheng.bean.PingJia">
+        select * from pingjia where iid=#{value}
+    </select>
+
+    <select id="getAllPingJiaByiidAndUid" resultType="com.shangcheng.shangcheng.bean.PingJia">
+        select * from pingjia where iid=#{iid} and uid=#{uid}
+    </select>
+    <delete id="delPingJiaById">
+        delete from pingjia where id=#{value}
+    </delete>
+    <update id="updatePingJia" parameterType="com.shangcheng.shangcheng.bean.PingJia">
+        update pingjia set pname=#{pname},neirong=#{neirong},date=#{date},gb=#{gb} where id=#{id}
+    </update>
+
+    <insert id="savePingJia" parameterType="com.shangcheng.shangcheng.bean.PingJia">
+        insert into pingjia(id,pname,neirong,date,uid,iid,gb) values(#{id},#{pname},#{neirong},#{date},#{uid},#{iid},#{gb})
+    </insert>
+
+</mapper>

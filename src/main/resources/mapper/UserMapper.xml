@@ -1,0 +1,28 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shangcheng.shangcheng.mapper.UserMapper">
+
+    <select id="getAllUser" resultType="com.shangcheng.shangcheng.bean.User">
+        select * from user
+    </select>
+    <select id="getUserByOpenId" resultType="com.shangcheng.shangcheng.bean.User">
+        select * from user where openid=#{value}
+    </select>
+
+    <select id="getUserById" resultType="com.shangcheng.shangcheng.bean.User">
+        select * from user where id=#{value}
+    </select>
+    <delete id="delUser">
+        delete from user where id=#{value}
+    </delete>
+    <update id="updateUser" parameterType="com.shangcheng.shangcheng.bean.User">
+        update user set username=#{username},touxiang=#{touxiang},weizhi=#{weizhi} where id=#{id}
+    </update>
+
+    <insert id="saveUser" parameterType="com.shangcheng.shangcheng.bean.User">
+        insert into user(id,username,touxiang,weizhi,openid) values(#{id},#{username},#{touxiang},#{weizhi},#{openid})
+    </insert>
+
+</mapper>
