@@ -1,13 +1,18 @@
 package com.shangcheng.shangcheng.controller;
+
 import com.shangcheng.shangcheng.bean.ItemOrder;
 import com.shangcheng.shangcheng.bean.PingJia;
+import com.shangcheng.shangcheng.bean.User;
 import com.shangcheng.shangcheng.service.ItemOrderService;
 import com.shangcheng.shangcheng.service.PingJiaService;
+import com.shangcheng.shangcheng.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,6 +25,8 @@ public class PingJiaController {
     private PingJiaService pingJiaService;
     @Autowired
     private ItemOrderService itemOrderService;
+    @Autowired
+    private UserService userService;
     /*
     * 添加商品评价
     * */
@@ -30,9 +37,22 @@ public class PingJiaController {
         System.out.println("========================");
         System.out.println(pingjia);
         ItemOrder itemOrder = itemOrderService.getItemOrderById(ioid);
+        User user = userService.getUserById(pingjia.getUid());
         pingjia.setIid(itemOrder.getIid());
+        pingjia.setDate(new Date());
+        pingjia.setPname(user.getUsername());
         itemOrderService.updateItemOrderPj(ioid,1);
         return pingJiaService.savePingJia(pingjia);
+    }
+
+    @RequestMapping(value="savePing")
+    @ResponseBody
+    public void savePing(HttpServletRequest request){
+        String ioid= request.getParameter("ioid");
+        String uid = request.getParameter("uid");
+        String neirong = request.getParameter("neirong");
+        String gb = request.getParameter("gb");
+        System.out.println("ioid:===>"+ioid+"uid:===>"+uid+"neirong:===>"+neirong+"gb:===>"+gb);
     }
     /*
     * 根据用户id查询所有评价

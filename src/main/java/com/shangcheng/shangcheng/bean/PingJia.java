@@ -1,5 +1,8 @@
 package com.shangcheng.shangcheng.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
@@ -65,7 +68,8 @@ public class PingJia {
     public void setUid(Integer uid) {
         this.uid = uid;
     }
-
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     public Date getDate() {
         return date;
     }

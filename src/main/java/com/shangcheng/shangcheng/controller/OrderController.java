@@ -1,9 +1,13 @@
 package com.shangcheng.shangcheng.controller;
 
-import com.shangcheng.shangcheng.bean.*;
+import com.shangcheng.shangcheng.bean.BackOrder;
+import com.shangcheng.shangcheng.bean.Details;
+import com.shangcheng.shangcheng.bean.ItemOrder;
+import com.shangcheng.shangcheng.bean.Order;
 import com.shangcheng.shangcheng.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,6 +50,7 @@ public class OrderController {
     * */
     @RequestMapping(value="saveOrder",method = RequestMethod.POST)
     @ResponseBody
+    @Transactional
     public int saveOrder(@RequestBody List<Map<String,Object>> list){
         Random rand = new Random();
 
@@ -137,6 +142,7 @@ public class OrderController {
 
     @RequestMapping("delOrder")
     @ResponseBody
+    @Transactional
     public int delOrder(Integer id){
         Order order = orderService.getOrder(id);
         List<ItemOrder> ioo=itemOrderService.getItemOrderByOid(id);
@@ -179,6 +185,7 @@ public class OrderController {
     * */
     @RequestMapping("backOrder")
     @ResponseBody
+    @Transactional
     public int backOrder(Integer id){
         Order order = orderService.getOrder(id);
         BackOrder backOrder = new BackOrder();
@@ -201,6 +208,19 @@ public class OrderController {
             detailsService.updateDetails(details);
         }
 
+        return 1;
+    }
+    /*
+    * 确认退货
+    * */
+    @RequestMapping("okback")
+    @ResponseBody
+    public int okBack(Integer id){
+        Order order = orderService.getOrder(id);
+        if(order.getCode()>=2&&order.getCode()<=4){
+            order.setCode(5);
+            orderService.updateOrder(order);
+        }
         return 1;
     }
 
