@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body class="container">
+        <div>
+            <button onclick="insertItem()">新增商品</button>
+        </div>
+        <table class="table" id="itemtable">
+            <tr>
+                <td>ID</td>
+                <td>商品名</td>
+                <td>销售价</td>
+                <td>原价</td>
+                <td>商品属性</td>
+                <td>商品图片</td>
+                <td>操作：</td>
+            </tr>
+        </table>
+
+        <!--新增商品信息-->
+        <div class="modal fade" id="insertItemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">新增商品</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form" id="saveci">
+                            <input type="hidden" name="id" id="id"/>
+                            <div class="form-group">
+                                <label for="category" class="col-sm-2 control-label">商品类别：</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" id="category" name="cid"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_iname" class="col-sm-2 control-label">商品名：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="id_iname" name="iname">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_inprice" class="col-sm-2 control-label">售价：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="id_inprice" name="inprice">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_outprice" class="col-sm-2 control-label">原价：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="id_outprice" name="outprice">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_beiyonga" class="col-sm-2 control-label">活动状态：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="id_beiyonga" name="beiyonga">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_paddress" class="col-sm-2 control-label">图片：</label>
+                                <div class="col-sm-10">
+                                    <input type="file" class="form-control" id="id_paddress" name="file">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_guige" class="col-sm-2 control-label">规格：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="id_guige" name="guige">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_canshu" class="col-sm-2 control-label">参数：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="id_canshu" name="canshu">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_daddress" class="col-sm-2 control-label">介绍图片地址：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="id_daddress" name=daddress">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_huodong" class="col-sm-2 control-label">活动：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="id_huodong" name="huodong">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_xiaoliang" class="col-sm-2 control-label">销量：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="id_xiaoliang" name="xiaoliang">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_kucun" class="col-sm-2 control-label">库存：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="id_kucun" name="kucun">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_kuaidi" class="col-sm-2 control-label">快递：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="id_kuaidi" name="kuaidi">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-8 col-sm-8">
+                                    <button type="button" class="btn btn-default" onclick="saveItem()">新增商品</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--修改商品信息-->
+        <div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">修改商品信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="insertOkBack" method="post" class="form-horizontal" role="form" id="thrk_form">
+                            <input type="hidden" name="id" id="thrkid"/>
+                            <div class="form-group">
+                                <label for="i_iname" class="col-sm-2 control-label">商品名：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="i_iname" name="iname">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="i_inprice" class="col-sm-2 control-label">售价：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="i_inprice" name="inprice">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="i_outprice" class="col-sm-2 control-label">原价：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="i_outprice" name="outprice">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="i_beiyonga" class="col-sm-2 control-label">活动状态：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="i_beiyonga" name="beiyonga">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="i_paddress" class="col-sm-2 control-label">图片地址：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="i_paddress" name="paddress">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-10 col-sm-10">
+                                    <button type="button" class="btn btn-default" onclick="updateItem()">修改</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--商品详情-->
+        <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">商品详情信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form" >
+                            <input type="text" class="form-control" id="detailsid" name="id" style="display: none">
+                            <input type="text" class="form-control" id="detailsiid" name="iid" style="display: none">
+                            <div class="form-group">
+                                <label for="guige" class="col-sm-2 control-label">规格：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="guige" name="guige">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="canshu" class="col-sm-2 control-label">参数：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="canshu" name="canshu">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="daddress" class="col-sm-2 control-label">介绍图片地址：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="daddress" name="daddress">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="huodong" class="col-sm-2 control-label">活动：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="huodong" name="huodong">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="xiaoliang" class="col-sm-2 control-label">销量：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="xiaoliang" name="xiaoliang">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="kucun" class="col-sm-2 control-label">库存：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="kucun" name="kucun">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 全局js -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+        <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+        <script src="js/plugins/layer/layer.min.js"></script>
+        <!-- 自定义js -->
+        <script src="js/hplus.js"></script>
+        <script type="text/javascript" src="js/contabs.js"></script>
+        <!-- 第三方插件 -->
+        <script src="js/plugins/pace/pace.min.js"></script>
+
+        <script>
+            $(function(){
+                getAllItems();
+                getAllCategory();
+            });
+
+            //查询所有商品
+            function getAllItems(){
+                $.ajax({
+                    url: 'getAllItems',
+                    contentType:'application/json;charset=utf-8',
+                    type: 'get',
+                    dataType: 'json',
+                    success:function(data){
+                        $.each(data,function(i,item){
+                            $('#itemtable').append("<tr><td>"+item.id+"</td><td>"+item.iname+"</td><td>"+item.inprice+"</td><td>"+item.outprice+"</td><td>"+item.beiyonga+"</td><td><img src='"+item.paddress+"'width='30px' height='30px' alt=''></td><td><button onclick='changeItem("+item.id+")'>修改</button>|<button onclick='showDetails("+item.id+")'>商品详情</button></td></tr>");
+                        });
+                    }
+                });
+            }
+
+            //查询所有类别
+            function getAllCategory(){
+                $.ajax({
+                    url: 'getAllCategory',
+                    contentType:'application/json;charset=utf-8',
+                    type: 'get',
+                    dataType: 'json',
+                    success:function(data){
+                        $.each(data,function (i,category){
+                            $("#category").append("<option value='"+category.id+"'>"+category.cname+"</option>")
+                        })
+                    }
+                })
+            }
+
+            //展示新增商品模态框
+            function insertItem(){
+                $("#insertItemModal").modal("show");
+            }
+
+            //提交新增商品模态框
+            function saveItem(){
+                var form = new FormData(document.getElementById("saveci"));
+                $.ajax({
+                    url: 'saveItem',
+                    data:form,
+                    processData : false,
+                    contentType : false,// 告诉jQuery不要去设置Content-Type请求头
+                    type: 'post',
+                    dataType: 'json',
+                    success:function(data){
+
+                    }
+                });
+            }
+
+            //展示修改商品模态框并展示商品信息
+            function changeItem(id){
+                alert(id);
+                $('#itemModal').modal('show')
+                $.ajax({
+                    url: 'getItem',
+                    data:{
+                        id:id
+                    },
+                    contentType:'application/json;charset=utf-8',
+                    type: 'get',
+                    dataType: 'json',
+                    success:function(data){
+                        $("#i_id").val(data.id);
+                        $("#i_iname").val(data.iname);
+                        $("#i_inprice").val(data.inprice);
+                        $("#i_outprice").val(data.outprice);
+                        $("#i_beiyonga").val(data.beiyonga);
+                        $("#i_paddress").val(data.paddress);
+                    }
+                })
+            }
+
+            //提交修改商品模态框
+            function updateItem(){
+                $.ajax({
+                    url: 'updateItem',
+                    data:{
+                        id:$("#i_id").val(),
+                        iname:$("#i_iname").val(),
+                        inprice:$("#i_inprice").val(),
+                        outprice:$("#i_outprice").val(),
+                        beiyonga:$("#i_beiyonga").val(),
+                        paddress:$("#i_paddress").val(),
+                    },
+                    contentType:'application/json;charset=utf-8',
+                    type: 'get',
+                    dataType: 'json',
+                    success:function(data){
+                        getAllItems();
+                        $('#itemtable').empty();
+                        $('#itemModal').modal('hide');
+                        alert(data);
+                    }
+                })
+            }
+
+            //展示商品信息
+            function showDetails(id){
+                $("#detailsModal").modal("show");
+                $.ajax({
+                    url: 'getDetailsById',
+                    data:{
+                        id:id
+                    },
+                    contentType:'application/json;charset=utf-8',
+                    type: 'get',
+                    dataType: 'json',
+                    success:function(data){
+                        $("#canshu").val(data.canshu);
+                        $("#guige").val(data.guige);
+                        $("#xiaoliang").val(data.xiaoliang);
+                        $("#kuaidi").val(data.kuaidi);
+                        $("#huodong").val(data.huodong);
+                        $("#kucun").val(data.kucun);
+                        $("#daddress").val(data.daddress);
+                        $("#detailsid").val(data.id);
+                        $("#detailsiid").val(data.iid);
+                    }
+                })
+            }
+        </script>
+    </body>
+</html>

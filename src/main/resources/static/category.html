@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body class="container">
+        <div>
+            <button onclick="insertcategory()">新增类别</button>
+        </div>
+        <table class="table" id="categorytable">
+            <tr>
+                <td>ID</td>
+                <td>类别名称</td>
+                <td>操作</td>
+            </tr>
+        </table>
+
+        <!--新增类别-->
+        <div class="modal fade" id="saveCategoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="saveCategory" method="get" class="form-horizontal" role="form" id="thrk_form">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title">新增类别</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="id" id="thrkid"/>
+                            <div class="form-group">
+                                <label for="cname" class="col-sm-2 control-label">类别名：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="cname" name="cname">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-10 col-sm-10">
+                                    <button type="button" class="btn btn-default" onclick="saveCategory()">新增类别</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- 全局js -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+        <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+        <script src="js/plugins/layer/layer.min.js"></script>
+        <!-- 自定义js -->
+        <script src="js/hplus.js"></script>
+        <script type="text/javascript" src="js/contabs.js"></script>
+        <!-- 第三方插件 -->
+        <script src="js/plugins/pace/pace.min.js"></script>
+
+        <script>
+            $(function(){
+                getAllCategory();
+            });
+
+            //查询所有类别
+            function getAllCategory(){
+                $.ajax({
+                    url: 'getAllCategory',
+                    contentType:'application/json;charset=utf-8',
+                    type: 'get',
+                    dataType: 'json',
+                    success:function(data){
+                        $.each(data,function (i,category){
+                            $("#categorytable").append("<tr><td>"+category.id+"</td><td>"+category.cname+"</td><td><button onclick='changeCategory("+category.id+")'>修改</button>|<button onclick='delCategory("+category.id+")'>删除</button></td></tr>")
+                        })
+                    }
+                })
+            }
+
+            //新增类别
+            function insertcategory(){
+                $("#saveCategoryModal").modal("show");
+            }
+
+            //提交新增类别模态框
+            function saveCategory(){
+                $.ajax({
+                    url: 'saveCategory',
+                    data:{
+                        cname:$("#cname").val()
+                    },
+                    contentType:'application/json;charset=utf-8',
+                    type: 'get',
+                    dataType: 'json',
+                    success:function(data){
+                        if(data==1){
+                            $("#saveCategoryModal").modal("hide");
+                            alert("添加成功");
+                        }
+                    }
+                })
+            }
+        </script>
+    </body>
+</html>

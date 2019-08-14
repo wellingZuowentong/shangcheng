@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>富蓝动力后台管理系统</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container">
+<div><button onclick="insertItem()">新增商品</button><button onclick="insertcategory()">新增类别</button></div>
+<table class="table" id="itemtable">
+    <tr>
+        <td>id：</td>
+        <td>商品名：</td>
+        <td>销售价：</td>
+        <td>原价：</td>
+        <td>商品属性：</td>
+        <td>商品图片：</td>
+        <td>操作：</td>
+    </tr>
+</table>
+<!--新增类别-->
+<div class="modal fade" id="saveCategoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">新增类别</h4>
+            </div>
+            <div class="modal-body">
+                    <input type="hidden" name="id" id="thrkid"/>
+                    <div class="form-group">
+                        <label for="thrkuser" class="col-sm-2 control-label">类别名：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="cname" name="cname">
+                        </div>
+                    </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-10 col-sm-10">
+                        <button type="button" class="btn btn-default" onclick="saveCategory()">新增类别</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--新增商品信息-->
+<div class="modal fade" id="insertItemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">新增商品</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" id="saveci">
+                    <input type="hidden" name="id" id="thrkid"/>
+                    <div class="form-group">
+                        <label for="thrkuser" class="col-sm-2 control-label">商品类别：</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="category" name="cid">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="thrkuser" class="col-sm-2 control-label">商品名：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="id_iname" name="iname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="thrkuser" class="col-sm-2 control-label">售价：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="id_inprice" name="inprice">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="thrkuser" class="col-sm-2 control-label">原价：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="id_outprice" name="outprice">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="thrkuser" class="col-sm-2 control-label">活动状态：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="id_beiyonga" name="beiyonga">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="thrkuser" class="col-sm-2 control-label">图片：</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control" id="id_paddress" name="file">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="thrkuser" class="col-sm-2 control-label">规格：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="id_guige" name="guige">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="thrkuser" class="col-sm-2 control-label">参数：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="id_canshu" name="canshu">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="thrkuser" class="col-sm-2 control-label">介绍图片地址：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="id_daddress" name=daddress">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="thrkuser" class="col-sm-2 control-label">活动：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="id_huodong" name="huodong">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="thrkuser" class="col-sm-2 control-label">销量：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="id_xiaoliang" name="xiaoliang">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="thrkuser" class="col-sm-2 control-label">库存：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="id_kucun" name="kucun">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="thrkuser" class="col-sm-2 control-label">快递：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="id_kuaidi" name="kuaidi">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-8 col-sm-8">
+                            <button type="button" class="btn btn-default" onclick="saveItem()">新增商品</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--修改商品信息-->
+<div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">修改商品信息</h4>
+            </div>
+            <div class="modal-body">
+                <form action="insertOkBack" method="post" class="form-horizontal" role="form" id="thrk_form">
+                    <input type="hidden" name="id" id="thrkid"/>
+                    <div class="form-group">
+                        <label for="thrkuser" class="col-sm-2 control-label">商品名：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="i_iname" name="iname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="thrkuser" class="col-sm-2 control-label">售价：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="i_inprice" name="inprice">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="thrkuser" class="col-sm-2 control-label">原价：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="i_outprice" name="outprice">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="thrkuser" class="col-sm-2 control-label">活动状态：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="i_beiyonga" name="beiyonga">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="thrkuser" class="col-sm-2 control-label">图片地址：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="i_paddress" name="paddress">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-10 col-sm-10">
+                            <button type="button" class="btn btn-default" onclick="updateItem()">修改</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--商品详情-->
+<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">商品详情信息</h4>
+        </div>
+        <div class="modal-body">
+                <input type="text" class="form-control" id="detailsid" name="id" style="display: none">
+                <input type="text" class="form-control" id="detailsiid" name="iid" style="display: none">
+                <div class="form-group">
+                    <label for="thrkuser" class="col-sm-2 control-label">规格：</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="guige" name="guige">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="thrkuser" class="col-sm-2 control-label">参数：</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="canshu" name="canshu">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="thrkuser" class="col-sm-2 control-label">介绍图片地址：</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="daddress" name="daddress">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="thrkuser" class="col-sm-2 control-label">活动：</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="huodong" name="huodong">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="thrkuser" class="col-sm-2 control-label">销量：</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="xiaoliang" name="xiaoliang">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="thrkuser" class="col-sm-2 control-label">库存：</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="kucun" name="kucun">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-10 col-sm-10">
+                        <button type="button" class="btn btn-default" onclick="updatedetails()">修改</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- 全局js -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="js/plugins/layer/layer.min.js"></script>
+<!-- 自定义js -->
+<script src="js/hplus.js?v=4.1.0"></script>
+<script type="text/javascript" src="js/contabs.js"></script>
+<!-- 第三方插件 -->
+<script src="js/plugins/pace/pace.min.js"></script>
+<script>
+
+</script>
+<script>
+    $(function(){
+        getAllItems();
+        getAllCategory();
+    });
+    function saveCategory(){
+        $.ajax({
+            url: 'saveCategory',
+            data:{
+              cname:$("#cname").val()
+            },
+            contentType:'application/json;charset=utf-8',
+            type: 'get',
+            dataType: 'json',
+            success:function(data){
+                if(data==1){
+                    $("#saveCategoryModal").modal("hide");
+                    alert("添加成功");
+                }
+            }
+        })
+    }
+    function getAllCategory(){
+        $.ajax({
+            url: 'getAllCategory',
+            contentType:'application/json;charset=utf-8',
+            type: 'get',
+            dataType: 'json',
+            success:function(data){
+                 $.each(data,function (i,category){
+                    $("#category").append("<option value='"+category.id+"'>"+category.cname+"</option>")
+                 })
+            }
+        })
+    }
+    function insertcategory(){
+        $("#saveCategoryModal").modal("show");
+    }
+    function saveItem(){
+        var form = new FormData(document.getElementById("saveci"));
+
+       /*form.append("cid",$("#category").val());
+        form.append("iname",$("#id_iname").val());
+        form.append("outprice",$("#id_outprice").val());
+        form.append("inprice",$("#id_inprice").val());
+        form.append("canshu",$("#id_canshu").val());
+        form.append("guige",$("#id_guige").val());
+        form.append("xiaoliang",$("#id_xiaoliang").val());
+        form.append("kuaidi",$("#id_kuaidi").val());
+        form.append("huodong",$("#id_huodong").val());
+        form.append("kucun",$("#id_kucun").val());
+        form.append("daddress",$("#id_daddress").val());*/
+
+        $.ajax({
+            url: 'saveItem',
+            data:form,
+            processData : false,
+// 告诉jQuery不要去设置Content-Type请求头
+            contentType : false,
+            type: 'post',
+            dataType: 'json',
+            success:function(data){
+
+            }
+        })
+    }
+    function insertItem(){
+        $("#insertItemModal").modal("show");
+    }
+    function updatedetails(){
+        $.ajax({
+            url: 'updateDetails',
+            data:{
+                id :$("#detailsid").val(),
+                iid:$("#detailsiid").val(),
+                canshu:$("#canshu").val(),
+                guige:$("#guige").val(),
+                xiaoliang:$("#xiaoliang").val(),
+                kuaidi:$("#kuaidi").val(),
+                huodong:$("#huodong").val(),
+                kucun:$("#kucun").val(),
+                daddress:$("#daddress").val()
+            },
+            contentType:'application/json;charset=utf-8',
+            type: 'get',
+            dataType: 'json',
+            success:function(data){
+                alert("修改成功");
+                $("#detailsModal").modal("hide");
+            }
+        })
+    }
+    function changedetails(id){
+        $("#detailsModal").modal("show");
+        $.ajax({
+            url: 'getDetailsById',
+            data:{
+                id:id
+            },
+            contentType:'application/json;charset=utf-8',
+            type: 'get',
+            dataType: 'json',
+            success:function(data){
+                $("#canshu").val(data.canshu);
+                $("#guige").val(data.guige);
+                $("#xiaoliang").val(data.xiaoliang);
+                $("#kuaidi").val(data.kuaidi);
+                $("#huodong").val(data.huodong);
+                $("#kucun").val(data.kucun);
+                $("#daddress").val(data.daddress);
+                $("#detailsid").val(data.id);
+                $("#detailsiid").val(data.iid);
+                /*var dizhi= data.daddress.split(',');
+                $.each(dizhi,function(i,address){
+                    alert(address);
+                })*/
+            }
+        })
+    }
+    function getAllItems(){
+        $.ajax({
+            url: 'getAllItems',
+            contentType:'application/json;charset=utf-8',
+            type: 'get',
+            dataType: 'json',
+            success:function(data){
+                $.each(data,function(i,item){
+                    $('#itemtable').append("<tr><td>"+item.id+"</td><td>"+item.iname+"</td><td>"+item.inprice+"</td><td>"+item.outprice+"</td><td>"+item.beiyonga+"</td><td><img src='"+item.paddress+"'width='30px' height='30px' alt=''></td><td><button onclick='changeItem("+item.id+")'>修改</button>|<button onclick='changedetails("+item.id+")'>商品详情</button></td></tr>");
+                })
+            }
+        });
+    }
+    function changeItem(id){
+        alert(id);
+        $('#itemModal').modal('show')
+        $.ajax({
+            url: 'getItem',
+            data:{
+                id:id
+            },
+            contentType:'application/json;charset=utf-8',
+            type: 'get',
+            dataType: 'json',
+            success:function(data){
+                $("#i_id").val(data.id);
+                $("#i_iname").val(data.iname);
+                $("#i_inprice").val(data.inprice);
+                $("#i_outprice").val(data.outprice);
+                $("#i_beiyonga").val(data.beiyonga);
+                $("#i_paddress").val(data.paddress);
+            }
+        })
+
+    }
+    function updateItem(){
+        $.ajax({
+            url: 'updateItem',
+            data:{
+                id:$("#i_id").val(),
+                iname:$("#i_iname").val(),
+                inprice:$("#i_inprice").val(),
+                outprice:$("#i_outprice").val(),
+                beiyonga:$("#i_beiyonga").val(),
+                paddress:$("#i_paddress").val(),
+            },
+            contentType:'application/json;charset=utf-8',
+            type: 'get',
+            dataType: 'json',
+            success:function(data){
+                getAllItems();
+                $('#itemtable').empty();
+                $('#itemModal').modal('hide');
+                alert(data);
+            }
+        })
+
+    }
+</script>
+</body>
+
+</html>
