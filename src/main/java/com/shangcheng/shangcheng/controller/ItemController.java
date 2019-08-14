@@ -65,7 +65,7 @@ public class ItemController {
         return itemService.getAllExCategory();
     }
     /*
-    * 根据商品id查询商品信息和商品详情
+    * 根据 商品id查询商品信息和商品详情
     * */
     @RequestMapping("getExItem")
     @ResponseBody

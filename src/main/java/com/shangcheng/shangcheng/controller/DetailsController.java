@@ -33,7 +33,7 @@ public class DetailsController {
         return detailsService.getDetailsByIid(iid);
     }
     /*
-     * 根据id查询商品详情
+     * 根据id查询 商品详情
      * */
     @RequestMapping("getDetailsById")
     @ResponseBody

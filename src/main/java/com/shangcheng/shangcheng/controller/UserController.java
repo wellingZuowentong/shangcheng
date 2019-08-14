@@ -37,10 +37,10 @@ public class UserController {
 
    /* @RequestMapping("/init")
     @ResponseBody
-    public void init(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void init( HttpServletRequest request, HttpServletResponse response) throws IOException {
         String echostr = this.initWechat(request);
         PrintWriter out = response.getWriter();
-        out.print(echostr);
+        out.pr int(echostr);
         out.close();
         out = null;
     }*/

@@ -3,7 +3,6 @@ package com.shangcheng.shangcheng.controller;
 import com.shangcheng.shangcheng.service.SenseAgroOrderService;
 import com.shangcheng.shangcheng.util.PayUtil;
 import com.shangcheng.shangcheng.util.WechatConfig;
-import org.apache.tomcat.util.codec.binary.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,7 +43,7 @@ public class PayController {
         return PayUtil.toJson(result);
     }
 
-    //这里是支付回调接口，微信支付成功后会自动调用
+    //这里是支 付回调接口，微信支付成功后会自动调用
     @RequestMapping(value = "/wxNotify", method = RequestMethod.POST)
     public void wxNotify(HttpServletRequest request, HttpServletResponse response) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
