@@ -7,9 +7,9 @@
     </head>
     <body class="container">
         <div>
-            <button onclick="insertItem()">新增商品</button>
+            <button class="btn btn-info" style="margin-top: 1%" type="button" onclick="insertItem()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增商品</button>
         </div>
-        <table class="table" id="itemtable">
+        <table class="table" style="margin-top: 1%" id="itemtable">
             <tr>
                 <td>ID</td>
                 <td>商品名</td>
@@ -17,7 +17,7 @@
                 <td>原价</td>
                 <td>商品属性</td>
                 <td>商品图片</td>
-                <td>操作：</td>
+                <td>操作</td>
             </tr>
         </table>
 
@@ -330,7 +330,7 @@
                         inprice:$("#i_inprice").val(),
                         outprice:$("#i_outprice").val(),
                         beiyonga:$("#i_beiyonga").val(),
-                        paddress:$("#i_paddress").val(),
+                        paddress:$("#i_paddress").val()
                     },
                     contentType:'application/json;charset=utf-8',
                     type: 'get',

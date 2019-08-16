@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>商城后台管理系统</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+</head>
+<body class="container">
+<table class="table" id="ordertable">
+    <tr>
+        <td>ID</td>
+        <td>订单编号</td>
+        <td>总价格</td>
+        <td>用户ID</td>
+        <td>操作</td>
+    </tr>
+</table>
+<!-- 订单详情 -->
+<div class="modal fade" id="orderModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="form-horizontal" role="form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">订单详情</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">订单编号：</label>
+                        <div class="col-sm-9">
+                            <p id="order-num" style="line-height: 32px"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">商品信息：</label>
+                        <div class="col-sm-9" id="order-xq">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">总价格：</label>
+                        <div class="col-sm-9">
+                            <p id="allPrice" style="line-height: 32px"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">购买时间：</label>
+                        <div class="col-sm-9">
+                            <p id="payDate" style="line-height: 32px"></p>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="js/plugins/layer/layer.min.js"></script>
+<!-- 自定义js -->
+<script src="js/hplus.js"></script>
+<script type="text/javascript" src="js/contabs.js"></script>
+<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+<!-- 第三方插件 -->
+<script src="js/plugins/pace/pace.min.js"></script>
+<script>
+
+</script>
+<script>
+    $(function(){
+        getAllOrder();
+    });
+
+    //按UID查询所有订单
+    function getAllOrder(){
+        $.ajax({
+            url: 'getAllOrder',
+            data:{
+                uid:2
+            },
+            contentType:'application/json;charset=utf-8',
+            type: 'get',
+            dataType: 'json',
+            success:function(data){
+                console.log(data);
+                for (var i = 0;i < data.length;i++){
+                    if(data[i].code == 2){
+                        $("#ordertable").append("<tr><td>"+data[i].id+"</td><td>"+data[i].ordernum+"</td><td>"+data[i].allprice+"</td><td>"+data[i].uid+"</td><td><button onclick='showOrderModel("+data[i].id+")'>订单详情</button></td></tr>");
+                    }
+                }
+            }
+        });
+    }
+
+    //订单详情
+    function showOrderModel(flag) {
+        $("#orderModel").modal("show");
+        $("#order-xq").empty();
+        $.ajax({
+            url: 'getAllOrder',
+            data:{
+                uid:2
+            },
+            contentType:'application/json;charset=utf-8',
+            type: 'get',
+            dataType: 'json',
+            success:function(data){
+                console.log(data);
+                for (var i = 0;i < data.length;i++){
+                    for (var m = 0;m < data[i].itemOrders.length;m++){
+                        if(data[i].id == flag){
+                            $("#order-num").empty();
+                            $("#allPrice").empty();
+                            $("#payDate").empty();
+                            $("#order-num").append(data[i].ordernum);
+                            $("#order-xq").append("<img src='"+data[i].itemOrders[m].item.paddress+"' style='width: 10%;float: left;' alt='image'><p style='margin-left: 12%;font-size: 20px'>商品名："+data[i].itemOrders[m].item.iname+"</p><p style='margin-left: 12%;font-size: 20px'>购买数量："+data[i].itemOrders[m].num+"</p>");
+                            $("#allPrice").append(data[i].allprice);
+                            $("#payDate").append(data[i].date);
+                        }
+                    }
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>
