@@ -93,7 +93,7 @@
                 console.log(data);
                 for (var i = 0;i < data.length;i++){
                     if(data[i].code == 3){
-                        $("#ordertable").append("<tr><td>"+data[i].id+"</td><td>"+data[i].ordernum+"</td><td>"+data[i].allprice+"</td><td>"+data[i].uid+"</td><td><button onclick='showOrderModel("+data[i].id+")'>订单详情</button></td></tr>");
+                        $("#ordertable").append("<tr><td>"+data[i].id+"</td><td>"+data[i].ordernum+"</td><td>"+data[i].allprice+"</td><td>"+data[i].uid+"</td><td><button type='button' class='btn btn-success' onclick='showOrderModel("+data[i].id+")'>订单详情</button></td></tr>");
                     }
                 }
             }

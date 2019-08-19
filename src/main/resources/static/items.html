@@ -255,7 +255,7 @@
                     dataType: 'json',
                     success:function(data){
                         $.each(data,function(i,item){
-                            $('#itemtable').append("<tr><td>"+item.id+"</td><td>"+item.iname+"</td><td>"+item.inprice+"</td><td>"+item.outprice+"</td><td>"+item.beiyonga+"</td><td><img src='"+item.paddress+"'width='30px' height='30px' alt=''></td><td><button onclick='changeItem("+item.id+")'>修改</button>|<button onclick='showDetails("+item.id+")'>商品详情</button></td></tr>");
+                            $('#itemtable').append("<tr><td>"+item.id+"</td><td>"+item.iname+"</td><td>"+item.inprice+"</td><td>"+item.outprice+"</td><td>"+item.beiyonga+"</td><td><img src='"+item.paddress+"'width='30px' height='30px' alt=''></td><td><button type='button' class='btn btn-primary' onclick='changeItem("+item.id+")'>修改</button>&nbsp;<button type='button' class='btn btn-success' onclick='showDetails("+item.id+")'>商品详情</button></td></tr>");
                         });
                     }
                 });
@@ -299,7 +299,6 @@
 
             //展示修改商品模态框并展示商品信息
             function changeItem(id){
-                alert(id);
                 $('#itemModal').modal('show')
                 $.ajax({
                     url: 'getItem',
